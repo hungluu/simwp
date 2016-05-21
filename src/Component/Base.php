@@ -23,4 +23,9 @@ abstract class Base {
 		$this->$key = $val;
 		return $this;
 	}
+
+	public function __call ($key, $args) {
+		$this->$key = $args[0];
+		return $this;
+	}
 }

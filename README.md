@@ -21,13 +21,13 @@ Register your first own `custom menu` that will contain all your setting pages
 $admin_holder= Simwp::admin('custom admin');
 
 // your new menu item
-$custom_menu = Simwp::menu('custom menu');
+$custom_menu = $admin_holder->menu('custom menu');
 ```
 
 Register a `custom page` setting page and pushed it into `custom menu`
 
 ```php
-$custom_page = Simwp::page('custom page')->appendTo($custom_menu);
+$custom_page = $admin_holder->page('custom page')->appendTo($custom_menu);
 ```
 
 Register your section `Simple` to be displayed in `custom page`
@@ -83,9 +83,9 @@ For getting option value
 Simwp::get('opt-key') // get option value
 
 Simwp::option('opt-key')
-	->set('default', 'def-value') // default value to return when option not found
-	->is('array') // submited value will be parsed as array
-	->is('boolean'); // submited value weill be parsed as boolean
+	->default('def-value') // default value to return when option not found
+	->type('array') // submited value will be parsed as array
+	->type('boolean'); // submited value weill be parsed as boolean
 ```
 
 ## Create Wordpress setting fields in seconds
@@ -141,7 +141,7 @@ Any 5 flags of notice : `primary` `info` `success` `warning` `error`
 ## Installation
 
 ```
-composer require dumday/simwp=dev-master
+composer require dumday/simwp
 ```
 or clone this repository then `require 'simwp/install.php'` if you do not use composer.
 
@@ -162,6 +162,6 @@ You can declare you own components and filters at any time, the components shoul
 
 ## License
 
-This module is completely **free** for any projects including commercial ones, and based on **MIT License**. You can do anything with it. The project is in its very early state and need more contributed components, filters, or translations, tests ... so I will appreciate very much if you can join us. Thank you.
+This module is completely **free** for any projects including commercial ones, and based on **MIT License**. You can do anything with it. The project is in its very early state and need more contributed components, filters, or translations ... so I will appreciated very much if you can join me. Thank you.
 
 Stay tuned.
