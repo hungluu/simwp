@@ -1,0 +1,4 @@
+# composer.gitignore
+composer.phar
+# Provide supports for non-composer users
+# /vendor/

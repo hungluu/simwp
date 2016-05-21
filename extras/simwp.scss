@@ -1,0 +1,57 @@
+@import "scss/variables";
+@import "scss/animations";
+@import "scss/notices";
+@import "css/tagit.css";
+
+#ui-datepicker-div {display: none;}
+
+.simwp-ui {
+	.simwp-radio, .simwp-checkbox {
+		margin: 0 5px;
+		padding: 5px;
+	}
+
+	@import "scss/input_lines";
+
+	.nav-tab-wrapper {
+		border-bottom : solid 1px #DDD;
+	}
+
+	.nav-tab:focus {
+		box-shadow: none;
+	}
+
+	.simwp-input-image {
+		img {
+			display: block;
+		}
+	}
+
+	textarea.simwp-textarea {
+		width: 100%;
+		min-width: 100%;
+		resize: none;
+		overflow-y: auto;
+		overflow-x: hidden;
+		padding: 10px 10px;
+		background: #FAFAFA no-repeat;
+	}
+
+	.tagit {
+		border: 1px solid #ddd;
+		-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+		box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+		background-color: #fff;
+
+		font-family: 'Open Sans', serif !important;
+		font-size: 14px !important;
+	}
+
+	.tagit.tagit-focus {
+		border-color: #5b9dd9;
+		-webkit-box-shadow: 0 0 2px rgba(30,140,190,.8);
+		box-shadow: 0 0 2px rgba(30,140,190,.8);
+	}
+}
+
+@import "scss/material";

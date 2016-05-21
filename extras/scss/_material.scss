@@ -1,0 +1,182 @@
+$border : #DDD;
+$border-focus : #069;
+.simwp-material-ui {
+	#simwp-notice----simwp-option-saved,
+	#simwp-notice----simwp-option-violated {
+		@extend .simwp-bounceIn;
+	}
+
+	.simwp-nav-tab:hover {
+		margin-top: -3px;
+		height: 27px;
+	}
+
+	.simwp-nav-tab:focus {
+		@extend .simwp-bounceIn;
+	}
+
+	.simwp-input, input[type="text"] {
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+		transition: 0.5s ease;
+		color: #666;
+
+		border-bottom: solid 3px #DDD;
+	}
+
+	.simwp-input:focus, [type="text"]:focus {
+		outline: none;
+		box-shadow: none;
+
+		color: #000;
+		border-bottom-color: #069;
+	}
+
+	.shadow {
+		-webkit-box-shadow: 0px 2px 1px 0px rgba(102,102,102,1);
+		-moz-box-shadow: 0px 2px 1px 0px rgba(102,102,102,1);
+		box-shadow: 0px 2px 1px 0px rgba(102,102,102,1);
+	}
+
+	.wp-picker-holder {
+		border-radius: 5px;
+		@extend .shadow;
+	}
+
+	.simwp-radio,
+	.simwp-checkbox {
+		width: 200px;
+		height: 100px;
+
+		/* Old browsers */
+	    background: linear-gradient(to left, transparent 51%, #DFDFDF 49%);
+	    background-size: 200% 100%;
+	    background-position: right top;
+	    transition: all 0.5s ease;
+	}
+
+	.simwp-radio:hover, .simwp-checkbox:hover {
+		background-position: left top;
+	}
+
+	.simwp-input-image {
+		width: auto;
+		overflow: hidden;
+		display: inline-block;
+		position: relative;
+		@extend .shadow;
+		border-radius: 5px;
+
+		@extend .simwp-bounceIn;
+
+		img {
+			display: block;
+			// width: 100%;
+		}
+
+		button {
+			cursor: pointer;
+			cursor: hand;
+			border-radius: 0;
+			margin-bottom: 0 !important;
+		}
+	}
+
+	th {
+		color : #069;
+	}
+
+	th:hover {
+		cursor: pointer;
+		cursor: hand;
+		color : #23282d;
+	}
+
+	input.simwp-tags.tagit-hidden-field {
+		display: none !important;
+	}
+
+	ul.tagit {
+		border-radius: 0;
+
+		.tagit-label {
+			color: #FDFDFD;
+		}
+
+		li.tagit-choice-editable {
+			background: #0ea5d4;
+			color: white;
+			border-radius: 0;
+			border: 0;
+		}
+
+		.ui-state-default .ui-icon {
+			background-image: url(./images/ui-icons_ffffff_256x240.png);
+		}
+
+		@extend .simwp-input;
+	}
+
+	ul.tagit.tagit-focus {
+		@extend .simwp-input:focus;
+	}
+
+	textarea.simwp-textarea {
+		border: 0;
+
+		/*
+		* IMPORTANT PART HERE
+		*/
+
+		/* 2 imgs : 1px gray line (normal state) AND 2px green line (focus state) */
+		background-image: linear-gradient(to bottom, $border, $border), linear-gradient(to bottom, $border, $border);
+		/* sizes for the 2 images (default state) */
+		background-size: 0 2px, 100% 2px;
+		/* positions for the 2 images. Change both "50%" to "0%" or "100%" and tri again */
+		background-position: 50% 100%, 50% 100%;
+
+		/* animation solely on background-size */
+		transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+	}
+
+	textarea.simwp-textarea:focus {
+		background-image: linear-gradient(to bottom, $border-focus, $border-focus), linear-gradient(to bottom, $border-focus, $border-focus);
+		outline: none;
+		box-shadow: none;
+		/* sizes for the 2 images (focus state) */
+		background-size: 100% 4px, 100% 3px;
+	}
+
+	.simwp-input-lines {
+		button {
+			font-weight: bold;
+			background: transparent;
+			color: #069;
+		}
+
+		button.delete {
+			background: transparent;
+			color: lighten(red, 10);
+		}
+
+		button:hover, button.delete:hover {
+			background: transparent;
+		}
+
+		label {
+			transition: color ease-in-out 0.4s;
+		}
+
+		tr:hover {
+			label {
+				font-weight: normal;
+				color : #DDD;
+			}
+
+			button {
+				transform : scale(1.5, 1.5);
+			}
+		}
+	}
+}

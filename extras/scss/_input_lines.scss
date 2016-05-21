@@ -1,0 +1,36 @@
+.simwp-input-lines {
+	td {
+		padding-left: 0 !important;
+	}
+
+	input.hidden { display : none !important; }
+	input {
+		width: 100%;
+		min-width: 100%;
+	}
+	button {
+		border: 0;
+		background: lighten(#069, 5);
+		cursor: pointer;
+		cursor: hand;
+		color : #DFDFDF;
+	}
+
+	button:hover {
+		background: #069;
+	}
+
+	button.delete {
+		background: lighten(red, 20);
+	}
+
+	button.delete:hover {
+		background: red;
+	}
+
+	tr:hover {
+		label {
+			font-weight: bold;
+		}
+	}
+}
