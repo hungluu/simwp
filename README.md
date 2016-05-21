@@ -141,9 +141,10 @@ Any 5 flags of notice : `primary` `info` `success` `warning` `error`
 ## Installation
 
 ```
-composer require dumday/simwp
+composer require dumday/simwp=dev-master
 ```
-or clone this repository then `require 'simwp/install.php'` if you do not use composer.
+
+or clone this repository then `require 'simwp/install.php';` if you do not use composer.
 
 ## FAQ
 
@@ -162,6 +163,6 @@ You can declare you own components and filters at any time, the components shoul
 
 ## License
 
-This module is completely **free** for any projects including commercial ones, and based on **MIT License**. You can do anything with it. The project is in its very early state and need more contributed components, filters, or translations ... so I will appreciated very much if you can join me. Thank you.
+This module is completely **free** for any projects including commercial ones, and based on **MIT License**. You can do anything with it. The project is in its very early state and need more contributed tests, components, filters, or translations ... so I will appreciate very much if you can join us. Thank you.
 
 Stay tuned.
