@@ -159,7 +159,7 @@ $admin_holder->className = 'my-own-class'; // default is 'simwp-material-ui'
 
 **How can I create my own section components and filters?**
 
-You can declare you own components and filters at any time, the components should be inside namespace `Simwp\Form` and the filters should be inside namespace `Simwp\Form\Filter` so the default `view` and `filter` method can easily recognize theme.
+You can declare you own components and filters at any time, the components should be inside namespace `Simwp\Form` and the filters should be inside namespace `Simwp\Form\Filter` so the default `view` and `filter` method can easily recognize them.
 
 ## License
 
