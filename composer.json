@@ -5,7 +5,7 @@
 	"version": "0.0.1-alpha",
 	"keywords": ["simple", "wordpress", "dashboard", "admin", "notice", "setting", "option", "menu"],
 	"homepage": "https://github.com/dumday/simwp",
-    "require-dev": {
+    "require": {
         "symfony/validator": "^3.0"
     },
 	"autoload": {
