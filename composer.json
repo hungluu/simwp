@@ -1,7 +1,7 @@
 {
     "name": "dumday/simwp",
     "type": "library",
-	"descripttion": "Help interacting with Wordpress admin dashboard more easily",
+	"description": "Help interacting with Wordpress admin dashboard more easily",
 	"version": "0.0.1-alpha",
 	"keywords": ["simple", "wordpress", "dashboard", "admin", "notice", "setting", "option", "menu"],
 	"homepage": "https://github.com/dumday/simwp",
