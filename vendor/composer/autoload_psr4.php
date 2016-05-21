@@ -11,4 +11,5 @@ return array(
     'Symfony\\Component\\Validator\\' => array($vendorDir . '/symfony/validator'),
     'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
     'Simwp\\' => array($baseDir . '/src'),
+    '' => array($baseDir . '/'),
 );

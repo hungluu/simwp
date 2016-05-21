@@ -44,7 +44,15 @@ class ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9
         ),
     );
 
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/../..' . '/',
+    );
+
     public static $classMap = array (
+        'ComposerAutoloaderInitc9accac7b514e63ee708d24f33dd99c9' => __DIR__ . '/..' . '/composer/autoload_real.php',
+        'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
+        'Composer\\Autoload\\ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9' => __DIR__ . '/..' . '/composer/autoload_static.php',
+        'Simwp' => __DIR__ . '/../..' . '/Simwp.php',
         'Simwp\\Admin' => __DIR__ . '/../..' . '/src/Admin.php',
         'Simwp\\AutoProcessedOptionManager' => __DIR__ . '/../..' . '/src/AutoProcessedOptionManager.php',
         'Simwp\\AutoRenderer' => __DIR__ . '/../..' . '/src/AutoRenderer.php',
@@ -295,6 +303,7 @@ class ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9::$fallbackDirsPsr4;
             $loader->classMap = ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9::$classMap;
 
         }, null, ClassLoader::class);

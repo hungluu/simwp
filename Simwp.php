@@ -1,6 +1,4 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-
 /**
  * Gate-way of Simwp . This a an very early-access of Simwp library
  *

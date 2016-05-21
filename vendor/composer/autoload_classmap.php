@@ -6,6 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'ComposerAutoloaderInitc9accac7b514e63ee708d24f33dd99c9' => $vendorDir . '/composer/autoload_real.php',
+    'Composer\\Autoload\\ClassLoader' => $vendorDir . '/composer/ClassLoader.php',
+    'Composer\\Autoload\\ComposerStaticInitc9accac7b514e63ee708d24f33dd99c9' => $vendorDir . '/composer/autoload_static.php',
+    'Simwp' => $baseDir . '/Simwp.php',
     'Simwp\\Admin' => $baseDir . '/src/Admin.php',
     'Simwp\\AutoProcessedOptionManager' => $baseDir . '/src/AutoProcessedOptionManager.php',
     'Simwp\\AutoRenderer' => $baseDir . '/src/AutoRenderer.php',

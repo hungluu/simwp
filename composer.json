@@ -5,15 +5,15 @@
 	"version": "0.0.1-alpha",
 	"keywords": ["simple", "wordpress", "dashboard", "admin", "notice", "setting", "option", "menu"],
 	"homepage": "https://github.com/dumday/simwp",
-    "require": {
+    "require-dev": {
         "symfony/validator": "^3.0"
     },
 	"autoload": {
 		"psr-4" : {
+			"" : "",
 			"Simwp\\" : "src",
 			"Symfony\\Component\\Validator\\Constraints\\" : "src/Constraint"
 		}
 	},
-    "license": "MIT",
-	"prefer-stable" : true
+    "license": "MIT"
 }
