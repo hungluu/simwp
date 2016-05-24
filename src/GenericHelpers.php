@@ -58,6 +58,8 @@ abstract class GenericHelpers {
 	 * @return string
 	 */
 	public static function url($abs_path){
-		return str_replace(get_home_path(), get_home_url() . '/', str_replace('\\', '/', $abs_path));
+		// minor fix
+		$home_path = str_replace('\\', '/', ABSPATH);
+		return str_replace($home_path, get_site_url() . '/', str_replace('\\', '/', $abs_path));
 	}
 }
