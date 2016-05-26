@@ -3,6 +3,9 @@ namespace Simwp\Partial;
 use Simwp\Component as Component;
 use Simwp\Admin;
 
+/**
+ * Provide section, menu and page rendering features
+ */
 abstract class AutoRenderer extends OptionManager {
 	/**
 	 * Store all admin objects

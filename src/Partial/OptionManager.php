@@ -2,6 +2,9 @@
 namespace Simwp\Partial;
 use Simwp\Component as Component;
 
+/**
+ * Provide options managing features
+ */
 abstract class OptionManager extends UserManager{
 	protected static $_options = [];
 

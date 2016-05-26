@@ -18,6 +18,13 @@ class Option extends Base {
 	public function isLimited(){
 		return count($this->items) > 0;
 	}
+	public function isAccessible(){
+		return Simwp::isAccessible($this);
+	}
+	public function handled($fn){
+		Simwp::handled($this->name, $fn);
+		return $this;
+	}
 	public function is($type){
 		$this->type = $type;
 		return $this;

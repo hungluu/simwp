@@ -1,5 +1,8 @@
-.git
 # composer.gitignore
 composer.phar
-# Provide supports for non-composer users
-# /vendor/
+composer.lock
+/vendor/
+
+# scss files
+/extras/*.scss
+/extras/scss/

@@ -55,12 +55,18 @@ abstract class GenericHelpers {
 
 	/**
 	 * Get public url based on dir path
-	 * @param  string $abs_path absolute path
-	 * @return string
+	 * @param  optional string $abs_path absolute path,
+	 *                         default is null, will become shortcut of wp get_home_url
+	 * @return			string
 	 */
-	public static function url($abs_path){
-		$base_path = str_replace('\\', '/', ABSPATH);
-		return str_replace($base_path, get_home_url() . '/', str_replace('\\', '/', $abs_path));
+	public static function url($abs_path = null){
+		if($abs_path !== null){
+			$base_path = str_replace('\\', '/', ABSPATH);
+			return str_replace($base_path, get_home_url() . '/', str_replace('\\', '/', $abs_path));
+		}
+		else{
+			return get_home_url();
+		}
 	}
 
 	/**
@@ -75,7 +81,7 @@ abstract class GenericHelpers {
 	}
 
 	/**
-	 * Auto-binding for an is- method
+	 * Auto-binding for is- prefixed methods
 	 * @return boolean
 	 */
 	 public static function is($sth){

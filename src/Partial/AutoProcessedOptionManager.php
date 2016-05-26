@@ -35,7 +35,7 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 	 * @param  optional Symfony\Component\Validator\Validation $validator validator
 	 * @return boolean
 	 */
-	public static function managed($key, $fn = null, &$errorCollector = [], &$validator = null){
+	public static function handled($key, $fn = null, &$errorCollector = [], &$validator = null){
 		// NOTE : Crsf or extra security checks should be used outside
 
 		// check option existence and if updated
@@ -46,7 +46,7 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 
 		$option = static::$_options[$key];
 		// if option is handled to only some schemes
-		if(!static::accessible($option)){
+		if(!static::isAccessible($option)){
 			return false;
 		}
 
@@ -98,7 +98,7 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 	 * @param  Simwp\Component\Option $option
 	 * @return boolean
 	 */
-	public static function accessible($option){
+	public static function isAccessible($option){
 		$current = static::$_current;
 
 		if($option->isLimited()
@@ -135,7 +135,7 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 		foreach (static::$_managed_options as $key) {
 			$option = static::$_options[$key];
 			$notAccessible = false;
-			$data = static::managed($key, null, $errors, $validator);
+			$data = static::handled($key, null, $errors, $validator);
 
 			if($data !== false){
 				$options[$key] = $data;

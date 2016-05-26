@@ -2,13 +2,19 @@
 
 This module is meant to be put inside any of your Wordpress themes or plugins to help interacting with Wordpress admin dashboard more easily.
 
+**NOTE:** For non-composer user, you can download a compiled version at [simwp-compiled](simwp-compiled)
+
+```
+composer require simwp=dev-master
+```
+
 **Table of Contents :**
 
 1. [Build `Wordpress setting pages`](#build-wordpress-setting-pages)
 2. [Work with `Wordpress options`](#work-with-wordpress-options)
 3. [Create `Wordpress setting fields` in seconds](#create-wordpress-setting-fields-in-seconds)
 4. [Work with `Wordpress notices`](#work-with-wordpress-notices)
-5. [Installation](#installation)
+5. [Need helps](#need-helps)
 6. [FAQ](#faq)
 7. [License](#license)
 
@@ -63,8 +69,9 @@ Simwp::manage('opt-key');
 Simwp::updated('opt-key', $opt_callback);
 
 // Check if user submit option value, and if that value
-// is valid with Symfony\Validator
-Simwp::managed('opt-key', $opt_callback);
+// is valid with Symfony\Validator, or accessible for current
+// section / page
+Simwp::handled('opt-key', $opt_callback);
 
 Simwp::isCsrf(); // check if csrf attack presents, good for ajax options
 
@@ -143,13 +150,9 @@ And 5 flags of notice : `primary` `info` `success` `warning` `error`
 
 ![Notices have 4 types and 4 flags](https://i.imgur.com/BZzhvgT.png)
 
-## Installation
+## Need helps
 
-```
-composer require dumday/simwp=dev-master
-```
-
-or clone this repository then `require 'simwp/install.php';` if you do not use composer.
+Find resolved issues or create a new one if you can't find any issue related to your problem at [Issues](issues)
 
 ## FAQ
 
