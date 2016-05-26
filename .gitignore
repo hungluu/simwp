@@ -2,7 +2,3 @@
 composer.phar
 composer.lock
 /vendor/
-
-# scss files
-/extras/*.scss
-/extras/scss/

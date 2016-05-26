@@ -2,7 +2,7 @@
 
 This module is meant to be put inside any of your Wordpress themes or plugins to help interacting with Wordpress admin dashboard more easily.
 
-**NOTE:** For non-composer user, you can download a compiled version at [simwp-compiled](simwp-compiled)
+**NOTE:** For non-composer user, you can download a compiled version at [simwp-compiled](https://github.com/dumday/simwp-compiled)
 
 ```
 composer require simwp=dev-master
