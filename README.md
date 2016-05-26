@@ -17,7 +17,8 @@ This module is meant to be put inside any of your Wordpress themes or plugins to
 Register your first own `custom menu` that will contain all your setting pages
 
 ```php
-// create an admin holder to hold custom menus and provide features like auto translating
+// create an admin holder to hold custom menus
+// and provide features like auto translating
 $admin_holder= Simwp::admin('custom admin');
 
 // your new menu item
@@ -27,7 +28,7 @@ $custom_menu = $admin_holder->menu('custom menu');
 Register a `custom page` setting page and pushed it into `custom menu`
 
 ```php
-$custom_page = $admin_holder->page('custom page')->appendTo($custom_menu);
+$custom_page = $custom_menu->page('custom page');
 ```
 
 Register your section `Simple` to be displayed in `custom page`
@@ -95,11 +96,15 @@ An example code of a `section`
 ```php
 class SimpleSection extends Simwp\Section {
 	function is_registered(){
-		$this->toggle('registered'); // create a checkbox for 'registered' option
+		// create a checkbox for 'registered' option
+		// short version of $this->view('toggle')->render('registered')
+		$this->toggle('registered');
 	}
 
 	function user_name(){
-		$this->tags('followed-users'); // create an input to fill 'followed-users'
+		// create an input to fill 'followed-users'
+		// short version of $this->view('tags')->render('followed-users')
+		$this->tags('followed-users');
 	}
 }
 ```
@@ -134,7 +139,7 @@ There are 4 types of notice :
 - `removable` notices can be avoided by users at any requests
 - `force` notices can never be avoided by users
 
-Any 5 flags of notice : `primary` `info` `success` `warning` `error`
+And 5 flags of notice : `primary` `info` `success` `warning` `error`
 
 ![Notices have 4 types and 4 flags](https://i.imgur.com/BZzhvgT.png)
 
@@ -154,12 +159,18 @@ Wow I feel sad to hear that. But you can always disable this feature or even add
 
 ```php
 // $admin_holder = Simwp::admin('admin holder')
-$admin_holder->className = 'my-own-class'; // default is 'simwp-material-ui'
+$admin_holder->className('my-own-class'); // default is 'simwp-material-ui'
 ```
 
 **How can I create my own section components and filters?**
 
 You can declare you own components and filters at any time, the components should be inside namespace `Simwp\Form` and the filters should be inside namespace `Simwp\Form\Filter` so the default `view` and `filter` method can easily recognize them.
+
+For example, you declare a new component `Simwp\Form\Custom` and inside a `section` you can call this line to render your new custom component :
+
+```php
+$this->custom('opt-name');
+```
 
 ## License
 

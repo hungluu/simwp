@@ -1,14 +1,13 @@
 <?php
 namespace Simwp\Component;
-
 use Simwp;
 use Symfony\Component\Validator\Constraint as Constraint;
 
 class Option extends Base {
-	public $type = 'string';
-	public $default = null;
+	public $type       = 'string';
+	public $default    = null;
 	public $validators = [];
-	public $level   = 'manage_options';
+	public $level      = 'manage_options';
 	public function validate(Constraint $constraint){
 		$this->validators[] = $constraint;
 		return $this;

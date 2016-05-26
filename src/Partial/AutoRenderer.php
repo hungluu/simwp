@@ -1,5 +1,8 @@
 <?php
-namespace Simwp;
+namespace Simwp\Partial;
+use Simwp\Component as Component;
+use Simwp\Admin;
+
 abstract class AutoRenderer extends OptionManager {
 	/**
 	 * Store all admin objects

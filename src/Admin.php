@@ -37,24 +37,6 @@ class Admin extends Component\Base {
 	}
 
 	/**
-	 * Create new page
-	 * @param  string        $name name of page
-	 * @param  option string $slug custom slug
-	 * @return Simwp\Component\Page
-	 */
-	public function page($name, $slug = null){
-		$page = new Component\Page($name);
-		$page->name = $name;
-		$page->slug = $slug;
-
-		if($page->slug === null){
-			$page->slug = Simwp::slug($name);
-		}
-
-		return $page;
-	}
-
-	/**
 	 * Register all menus
 	 * @param  object $current current request tracker from Simwp gate-way
 	 */

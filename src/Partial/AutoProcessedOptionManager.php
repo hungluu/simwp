@@ -1,5 +1,5 @@
 <?php
-namespace Simwp;
+namespace Simwp\Partial;
 use Symfony\Component\Validator\Validation;
 
 abstract class AutoProcessedOptionManager extends AutoRenderer {
@@ -51,7 +51,7 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 		}
 
 		// check with validations
-		$errors = static::validate($data, $option, $validator);
+		$errors = static::validateOption($data, $option, $validator);
 		if(count($errors) > 0){
 			$errorCollector[$key] = $errors;
 
@@ -75,7 +75,7 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 	 * @param  object $validator a validator ( with ::validate )
 	 * @return array empty array on success
 	 */
-	public static function validate($data, $option, $validator){
+	public static function validateOption($data, $option, $validator){
 		$errors = [];
 
 		if(!$option->isValidated()){

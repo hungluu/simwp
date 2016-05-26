@@ -8,7 +8,7 @@
  * @license MIT
  * @copyright HR (c) 2016
  */
-final class Simwp extends Simwp\AutoProcessedOptionManager{
+final class Simwp extends Simwp\Partial\Views{
 	const PATH = __DIR__;
 }
 

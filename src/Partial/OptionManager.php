@@ -1,7 +1,8 @@
 <?php
-namespace Simwp;
+namespace Simwp\Partial;
+use Simwp\Component as Component;
 
-abstract class OptionManager extends GenericHelpers{
+abstract class OptionManager extends UserManager{
 	protected static $_options = [];
 
 	/**
@@ -59,11 +60,11 @@ abstract class OptionManager extends GenericHelpers{
 		$current = static::$_current;
 		$option  = static::$_options[$key];
 
-		if(!current_user_can($option->level)){
+		if(static::cant($option->level)){
 			return false;
 		}
 
-		$data = static::sanitize($key, $option->type);
+		$data = static::sanitizeOption($key, $option->type);
 
 		if($data !== false && $fn !== false){
 			// $key, $value, $option
@@ -74,12 +75,12 @@ abstract class OptionManager extends GenericHelpers{
 	}
 
 	/**
-	 * Attermpt to sanitize _POST data
+	 * Attermpt to sanitize _POST data for options
 	 * @param  string $key _POST and option key
 	 * @param  string $type
 	 * @return mixed       return false on failure
 	 */
-	public static function sanitize($key, $type){
+	public static function sanitizeOption($key, $type){
 		if(isset($_POST[$key])){
 			return $_POST[$key];
 		}

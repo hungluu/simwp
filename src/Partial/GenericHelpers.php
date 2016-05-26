@@ -1,5 +1,6 @@
 <?php
-namespace Simwp;
+namespace Simwp\Partial;
+
 abstract class GenericHelpers {
 
 	/**
@@ -58,8 +59,34 @@ abstract class GenericHelpers {
 	 * @return string
 	 */
 	public static function url($abs_path){
-		// minor fix
-		$home_path = str_replace('\\', '/', ABSPATH);
-		return str_replace($home_path, get_site_url() . '/', str_replace('\\', '/', $abs_path));
+		$base_path = str_replace('\\', '/', ABSPATH);
+		return str_replace($base_path, get_home_url() . '/', str_replace('\\', '/', $abs_path));
 	}
+
+	/**
+	 * Create and return a component
+	 * @param  string component class
+	 * @return Simwp\component\Base
+	 */
+	public static function make($name){
+		$class = 'Simwp\\Component\\' + ucfirst($name);
+
+		return new $class('Component');
+	}
+
+	/**
+	 * Auto-binding for an is- method
+	 * @return boolean
+	 */
+	 public static function is($sth){
+		 $args = func_get_args();
+		 $method = 'is' . ucfirst($args[0]);
+		 if(count($args) === 1){
+			 return static::$method();
+		 }
+		 else{
+			 $args = array_slice($args, 1);
+			 return call_user_func_array('static::' . $method, $args);
+		 }
+	 }
 }

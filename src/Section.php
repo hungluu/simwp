@@ -1,13 +1,17 @@
 <?php
 namespace Simwp;
-use Simwp;
-class Section {
+/**
+ * A base class for sections
+ *
+ * Should only be used automatically by Simwp
+ */
+abstract class Section {
 	/**
 	 * Get a filter
 	 * @param  string $name name of filter
 	 * @return Simwp\Form\Filter\Base
 	 */
-	protected function filter($name){
+	protected function filter ($name) {
 		$class = 'Simwp\\Form\\Filter\\' . ucfirst($name);
 		$filter= new $class();
 		return array($filter, 'filter');
@@ -18,7 +22,7 @@ class Section {
 	 * @param  string $name name of controller
 	 * @return Simwp\Form\Base
 	 */
-	protected function view($name){
+	protected function view ($name) {
 		$class = 'Simwp\\Form\\' . ucfirst($name);
 		return new $class();
 	}
@@ -29,7 +33,7 @@ class Section {
 	 * @param  string $name name of controller
 	 * @param  array  $args argument list
 	 */
-	public function __call($name, $args){
+	public function __call ($name, $args) {
 		$controller = $this->view(trim($name, '_'));
 		return call_user_func_array([$controller, 'render'], $args);
 	}
