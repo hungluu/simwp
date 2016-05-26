@@ -152,7 +152,7 @@ And 5 flags of notice : `primary` `info` `success` `warning` `error`
 
 ## Need helps
 
-Find resolved issues or create a new one if you can't find any issue related to your problem at [Issues](issues)
+Find resolved issues or create a new one if you can't find any issue related to your problem at [Issues](https://github.com/dumday/simwp/issues)
 
 ## FAQ
 
