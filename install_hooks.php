@@ -1,11 +1,11 @@
 <?php
-// Install CSRF for Ajax
+// Install CSRF protection for Ajax
 Simwp\Admin::bind('head', function(){
-	echo '<meta name="csrf-token" content="' . wp_create_nonce('simwp-ajax-update') . '">';
+	echo sprintf('<meta name="csrf-token" content="%s">', Simwp::nonce('simwp-ajax-update'));
 });
 
 Simwp\Admin::bind('simwp_section', function(){
-	echo sprintf('<input type="hidden" value="%s" name="simwp-update">', wp_create_nonce('simwp-update'));
+	echo sprintf('<input type="hidden" value="%s" name="simwp-update">', Simwp::nonce('simwp-update'));
 });
 
 // Bind admin dashboard hooks

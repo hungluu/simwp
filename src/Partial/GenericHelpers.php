@@ -71,13 +71,14 @@ abstract class GenericHelpers {
 
 	/**
 	 * Create and return a component
-	 * @param  string component class
-	 * @return Simwp\component\Base
+	 * @param  			string $component
+	 * @param  optional string $name default is Component
+	 * @return			Simwp\component\Base
 	 */
-	public static function make($name){
-		$class = 'Simwp\\Component\\' + ucfirst($name);
+	public static function make($component, $name = 'Component'){
+		$class = 'Simwp\\Component\\' + ucfirst($component);
 
-		return new $class('Component');
+		return new $class($name);
 	}
 
 	/**
@@ -93,6 +94,21 @@ abstract class GenericHelpers {
 		 else{
 			 $args = array_slice($args, 1);
 			 return call_user_func_array('static::' . $method, $args);
+		 }
+	 }
+
+	 /**
+	  * Create a wp_nonce or validate nonce if $value is provided
+	  * @param  		 string $name  name of nonce
+	  * @param  optional mixed  $value value of nonce to validate
+	  * @return mixed
+	  */
+	 public static function nonce($name, $value = false){
+		 if($value !== false){
+			 return wp_verify_nonce($value, $name);
+		 }
+		 else{
+			 return wp_create_nonce($name);
 		 }
 	 }
 }

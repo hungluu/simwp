@@ -2,7 +2,7 @@
 namespace Simwp\Partial;
 use Symfony\Component\Validator\Validation;
 
-abstract class AutoProcessedOptionManager extends AutoRenderer {
+abstract class OptionAutoHandler extends AutoRenderer {
 	/**
 	 * Managed options, auto-processed on load
 	 * @var array
@@ -70,13 +70,14 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 
 	/**
 	 * Check if input data is acceptable for an option
-	 * @param  mixed				  $data
-	 * @param  Simwp\Component\Option $option
+	 * @param  mixed  $data
+	 * @param  string $key
 	 * @param  object $validator a validator ( with ::validate )
 	 * @return array empty array on success
 	 */
-	public static function validateOption($data, $option, $validator){
+	public static function validateOption($data, $key, $validator){
 		$errors = [];
+		$option = static::option($key);
 
 		if(!$option->isValidated()){
 			return $errors;
@@ -95,11 +96,12 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 
 	/**
 	 * Check if option is accessible in current page
-	 * @param  Simwp\Component\Option $option
+	 * @param  string  $key
 	 * @return boolean
 	 */
-	public static function isAccessible($option){
+	public static function isAccessible($key){
 		$current = static::$_current;
+		$option  = static::option($key);
 
 		if($option->isLimited()
 			&& !in_array($current->section, $option->items)
@@ -122,47 +124,49 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 			return false;
 		}
 
-		$validator = Validation::createValidatorBuilder()->getValidator();
-		// temporarily save option values to used after no violation found
-		$options   = [];
-		$errors    = [];
-		$isForm    = isset($_POST['submit']);
-		$current   = static::$_current;
-		$textdomain= static::current('found') && static::current('admin') ? static::current('admin')->transName : 'default';
-		$violated  = false;
+		if(is_admin()){
+			$validator = Validation::createValidatorBuilder()->getValidator();
+			// temporarily save option values to used after no violation found
+			$options   = [];
+			$errors    = [];
+			$isForm    = isset($_POST['submit']);
+			$current   = static::$_current;
+			$textdomain= static::current('found') && static::current('admin') ? static::current('admin')->transName : 'default';
+			$violated  = false;
 
-		// get all updated options and validate
-		foreach (static::$_managed_options as $key) {
-			$option = static::$_options[$key];
-			$notAccessible = false;
-			$data = static::handled($key, null, $errors, $validator);
+			// get all updated options and validate
+			foreach (static::$_managed_options as $key) {
+				$option = static::$_options[$key];
+				$notAccessible = false;
+				$data = static::handled($key, null, $errors, $validator);
 
-			if($data !== false){
-				$options[$key] = $data;
-			}
-		}
-
-		// init all options once
-		if(count($options) > 0){
-			if(count($errors) === 0){
-				foreach($options as $key => $data){
-					static::set($key, $data);
+				if($data !== false){
+					$options[$key] = $data;
 				}
-
-				$notice = static::alert('---simwp-option-violated', 'success')->append(static::trans('Settings saved.', $textdomain));
 			}
-			else {
-				$notice = static::alert('---simwp-option-violated', 'danger');
 
-				$notice->append(static::trans('Settings not saved. Please fix the following errors', $textdomain));
+			// init all options once
+			if(count($options) > 0){
+				if(count($errors) === 0){
+					foreach($options as $key => $data){
+						static::set($key, $data);
+					}
 
-				// show error messages
-				foreach($errors as $key => $errorList){
-					if(count($errorList) > 0){
-						$notice->append('<b>' . $key . ' :</b>');
-						foreach($errorList as $error){
-							foreach($error as $e){
-								$notice->append(static::trans(' - ' . $e->getMessage(), $textdomain));
+					$notice = static::alert('---simwp-option-violated', 'success')->append(static::trans('Settings saved.', $textdomain));
+				}
+				else {
+					$notice = static::alert('---simwp-option-violated', 'danger');
+
+					$notice->append(static::trans('Settings not saved. Please fix the following errors', $textdomain));
+
+					// show error messages
+					foreach($errors as $key => $errorList){
+						if(count($errorList) > 0){
+							$notice->append('<b>' . $key . ' :</b>');
+							foreach($errorList as $error){
+								foreach($error as $e){
+									$notice->append(static::trans(' - ' . $e->getMessage(), $textdomain));
+								}
 							}
 						}
 					}
@@ -185,10 +189,10 @@ abstract class AutoProcessedOptionManager extends AutoRenderer {
 				return true;
 			}
 
-			return !wp_verify_nonce($token, 'simwp-ajax-update');
+			return !static::nonce('simwp-ajax-update', $token);
 		}
 		else{
-			return !wp_verify_nonce($token, 'simwp-update');
+			return !static::nonce('simwp-update', $token);
 		}
 	}
 }
