@@ -76,7 +76,8 @@ abstract class GenericHelpers {
 	 * @return			Simwp\component\Base
 	 */
 	public static function make($component, $name = 'Component'){
-		$class = 'Simwp\\Component\\' + ucfirst($component);
+		// fix typo
+		$class = 'Simwp\\Component\\' . ucfirst($component);
 
 		return new $class($name);
 	}
