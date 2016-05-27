@@ -46,12 +46,12 @@ abstract class OptionAutoHandler extends AutoRenderer {
 
 		$option = static::$_options[$key];
 		// if option is handled to only some schemes
-		if(!static::isAccessible($option)){
+		if(!static::isAccessible($key)){
 			return false;
 		}
 
 		// check with validations
-		$errors = static::validateOption($data, $option, $validator);
+		$errors = static::validateOption($data, $key, $validator);
 		if(count($errors) > 0){
 			$errorCollector[$key] = $errors;
 
