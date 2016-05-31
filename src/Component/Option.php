@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint as Constraint;
 class Option extends Base {
 	public $type       = 'string';
 	public $default    = null;
-	public $validators = [];
+	public $validators = array();
 	public $level      = 'manage_options';
 	public function validate(Constraint $constraint){
 		$this->validators[] = $constraint;

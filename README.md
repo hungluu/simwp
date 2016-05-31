@@ -73,7 +73,9 @@ Simwp::updated('opt-key', $opt_callback);
 // section / page
 Simwp::handled('opt-key', $opt_callback);
 
-Simwp::isCsrf(); // check if csrf attack presents, good for ajax options
+Simwp::is('csrf'); // check if csrf attack presents in admin dashboard, good for ajax options
+Simwp::is('dashboard'); // check if current view is admin dashboard
+Simwp::is('user'); // check if user logged in
 
 // Some simple option handling
 Simwp::option('opt-key')

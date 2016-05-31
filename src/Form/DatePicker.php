@@ -7,7 +7,7 @@ class DatePicker extends Input {
 		wp_enqueue_script('jquery-ui-core');
 		wp_enqueue_script('jquery-ui-datepicker');
 		if($locale = get_locale() != 'en_US' && $locale){
-			wp_enqueue_script('jquery-ui-datepicker/locale' , Simwp::url( Simwp::PATH . '/extras/jquery-ui/datepicker-locales/datepicker-' . $locale . '.js'), ['jquery-ui-datepicker'], false, true);
+			wp_enqueue_script('jquery-ui-datepicker/locale' , Simwp::url( Simwp::PATH . '/extras/jquery-ui/datepicker-locales/datepicker-' . $locale . '.js'), array('jquery-ui-datepicker'), false, true);
 		}
 	}
 

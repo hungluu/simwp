@@ -35,6 +35,6 @@ abstract class Section {
 	 */
 	public function __call ($name, $args) {
 		$controller = $this->view(trim($name, '_'));
-		return call_user_func_array([$controller, 'render'], $args);
+		return call_user_func_array(array($controller, 'render'), $args);
 	}
 }

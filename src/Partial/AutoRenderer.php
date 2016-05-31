@@ -6,18 +6,18 @@ use Simwp\Admin;
 /**
  * Provide section, menu and page rendering features
  */
-abstract class AutoRenderer extends OptionManager {
+class AutoRenderer extends OptionManager {
 	/**
 	 * Store all admin objects
 	 * @var array
 	 */
-	protected static $_admins  = [];
+	protected static $_admins  = array();
 
 	/**
 	 * Store all notice objects
 	 * @var array
 	 */
-	protected static $_notices = [];
+	protected static $_notices = array();
 
 	/**
 	 * Store current rendering information
@@ -159,7 +159,7 @@ abstract class AutoRenderer extends OptionManager {
 			$name  = static::_sanitizeSectionName($section);
 
 			if($section === $current){
-				echo '<a class="nav-tab simwp-nav-tab nav-tab-active" href="#" style="margin-left: 0; margin-right: 0">' . $name . '</a>';
+				echo '<a class="nav-tab simwp-nav-tab nav-tab-active" href="?page=' . $page->slug . '&section=' . $section .'" style="margin-left: 0; margin-right: 0">' . $name . '</a>';
 			}
 			else {
 				echo '<a class="nav-tab simwp-nav-tab" href="?page=' . $page->slug . '&section=' . $section .'" style="margin-left: 0; margin-right: 0">' . $name . '</a>';
@@ -174,10 +174,11 @@ abstract class AutoRenderer extends OptionManager {
 	 */
 	protected static function _registerStyles($current){
 		if($current->found){
+			define('SIMWP_STYLESHEET', static::url( static::PATH . '/extras/simwp.min.css'));
 			// Enqueue required script
 			static::bind('admin_enqueue_scripts', function(){
 				wp_enqueue_style('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
-				wp_enqueue_style('simwp/css' , static::url( static::PATH . '/extras/simwp.min.css'));
+				wp_enqueue_style('simwp/css' , SIMWP_STYLESHEET);
 			});
 		}
 	}
@@ -288,7 +289,7 @@ abstract class AutoRenderer extends OptionManager {
 	protected static function _renderNotices($notices){
 		static::_beforeContents();
 		$removed = static::get('---simwp-removed-notices');
-		$newRemoved = [];
+		$newRemoved = array();
 
 		foreach ($notices as $notice) {
 			if(!in_array($notice->name, $removed) || $notice->force === true){

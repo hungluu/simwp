@@ -1,28 +1,43 @@
-!function($){
-	var locale = $('body').attr('class').match(/locale-(\w{2})/);
+var Simwp = (function($){
+	var simwp = {};
 
-	if(locale){
-		locale = locale[1];
-	}
-
-	function removeNotice(){
-		var _this = this;
-
+	simwp.locale = 'en';
+	// ajax options
+	simwp.set = function(key, val){
 		$.ajax({
 			url : '.',
 			data : {
-				'---simwp-removed-notices' : this.id.replace('simwp-notice-', '')
+				key : val
 			},
 			method : 'POST',
 			headers: {
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        }
 		});
-	}
+	};
 
-	function removeLine(){
-		$(this).closest('tr').remove();
-	}
+	simwp.trigger = function(action, options){
+		$(document).trigger(action, options);
+	};
+
+	simwp.bind = function(action, fn){
+		$(document).on(action, fn);
+	};
+
+	simwp.view = {};
+
+	simwp.view.noticeRemove = function(s){
+		$(s).on('click', function removeNotice(){
+			simwp.set('---simwp-removed-notices', this.id.replace('simwp-notice-', ''));
+			siwmp.trigger('simwp_notice_removed', [this]);
+		});
+	};
+
+	simwp.view.lineRemoveButton = function(s){
+		$(s).on('click', function removeLine(){
+			$(this).closest('tr').remove();
+		});
+	};
 
 	function addLine(){
 		// test trim
@@ -39,20 +54,40 @@
 		// reset input
 		this.value = '';
 		// add delete button
-		var button = $('<button>', {type : 'button' , class : 'delete' }).text('x').click(removeLine);
+		var button = $('<button>', {type : 'button' , class : 'delete' }).text('x');
+
+		simwp.view.lineRemoveButton(button);
+
 		$('<td>').append(button).appendTo(row);
 		row.insertBefore(currentRow);
+
+		currentRow.closest('table');
+
+		simwp.trigger('simwp_line_added', [row, this]);
 	}
 
-	function addLineButton(){
-		var id = this.id.replace('simwp-input-lines-button-', '');
-		addLine.apply($('#simwp-input-lines-edit-' + id)[0]);
-	}
+	simwp.view.lineAddInput = function(s){
+		$(s).on('keydown', function enter(e){
+			var code = e.code || e.which;
+			if(code === 13){
+				e.preventDefault();
+				addLine.apply(this);
+			}
+		});
+	};
 
-	function openWpImageSelector(e){
-		var _this = this;
-		e.preventDefault();
-		var image = wp.media({
+	simwp.view.lineAddButton = function(s){
+		$(s).click(function addLineButton(){
+			var id = this.id.replace('simwp-input-lines-button-', '');
+			addLine.apply($('#simwp-input-lines-edit-' + id)[0]);
+		});
+	};
+
+	simwp.view.imagePicker = function(s){
+		$(s).click(function pickImage(e){
+			var _this = this;
+			e.preventDefault();
+			var image = wp.media({
 				title: 'Upload Image',
 				// mutiple: true if you want to upload multiple files at once
 				multiple: false
@@ -67,46 +102,76 @@
 				var parent = $(_this).parent();
 				parent.children('img').attr('src', image_url);
 				parent.children('input').val(image_url);
+				// src, target
+				simwp.trigger('simwp_image_selected', [image_url, parent]);
 			}).open();
-	}
-
-	function removeImage(){
-		var img = $(this).parent().children('img');
-		img.attr('src', '');
-		img.attr('src', '//placehold.it/' + img.width() + 'x' + img.height() + '/ddd/fdfdfd');
-		$(this).parent().children('input').val('');
-	}
-
-	$(function(){
-		$('.notice.is-removable').click(removeNotice);
-		$('.simwp-color-field').wpColorPicker();
-		$('.simwp-tags').tagit();
-		$('.tagit').children().children('input').focusin(function(){
-			$(this).parent().parent().addClass('tagit-focus');
-		}).focusout(function(){
-			$(this).parent().parent().removeClass('tagit-focus');
 		});
+	};
 
-		if(locale){
-			$('.simwp-date-field').datepicker({dateFormat : 'yy-mm-dd'}, $.datepicker.regional[locale]);
+	simwp.view.imageRemove = function(s){
+		$(s).click(function removeImage(){
+			var img = $(this).parent().children('img');
+			img.attr('src', '');
+			img.attr('src', '//placehold.it/' + img.width() + 'x' + img.height() + '/ddd/fdfdfd');
+			$(this).parent().children('input').val('');
+			// target
+			simwp.trigger('simwp_image_removed', [parent]);
+		});
+	};
+
+	simwp.view.tags = function(s){
+		if($.fn.tagit){
+			$(s).tagit();
+
+			if($('.simwp-material-ui').length > 0){
+				$('.tagit').children().children('input').on('focusin', function(){
+					$(this).parent().parent().addClass('tagit-focus');
+				}).on('focusout', function(){
+					$(this).parent().parent().removeClass('tagit-focus');
+				});
+			}
 		}
-		else{
-			$('.simwp-date-field').datepicker({dateFormat : 'yy-mm-dd'});
+	};
+
+	simwp.view.colorPicker = function(s){
+		if($.fn.wpColorPicker){
+			$(s).wpColorPicker();
 		}
+	};
+
+	simwp.view.datePicker = function(s){
+		if($.datepicker){
+			$(s).datepicker({dateFormat : 'yy-mm-dd'}, $.datepicker.regional[simwp.locale]);
+		}
+	};
+
+	// Install components
+	$(function(){
+		var bodyLocale = $('body').attr('class').match(/locale-(\w{2})/);
+
+		if(bodyLocale){
+			simwp.locale = bodyLocale[1];
+		}
+
+		simwp.view.noticeRemove('.notice.is-removable');
+
+		simwp.view.colorPicker('.simwp-color-field');
+
+		simwp.view.tags('.simwp-tags');
+
+		simwp.view.datePicker('.simwp-date-field');
 
 		$('#ui-datepicker-div').addClass('ll-skin-melon');
 
-		$('.simwp-input-image').children('button.add').click(openWpImageSelector);
-		$('.simwp-input-image').children('button.delete').click(removeImage);
+		var images = $('.simwp-input-image');
 
-		$('.simwp-input-lines').find('button.delete').click(removeLine);
-		$('.simwp-input-lines-edit').keydown(function enter(e){
-			var code = e.code || e.which;
-			if(code === 13){
-				e.preventDefault();
-				addLine.apply(this);
-			}
-		});
-		$('.simwp-input-lines-button').click(addLineButton);
+		simwp.view.imagePicker(images.children('button.add'));
+		simwp.view.imageRemove(images.children('button.delete'));
+
+		simwp.view.lineRemoveButton($('.simwp-input-lines').find('button.delete'));
+		simwp.view.lineAddInput('.simwp-input-lines-edit');
+		simwp.view.lineAddButton('.simwp-input-lines-button');
 	});
-}(jQuery);
+
+	return simwp;
+})(jQuery);

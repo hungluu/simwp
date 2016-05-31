@@ -4,7 +4,7 @@ namespace Simwp\Form;
 class Checkboxes extends Loop {
 	public function active($idx, $opt){
 		if(!is_array($opt)){
-			$opt = [];
+			$opt = array();
 		}
 
 		return in_array($idx, $opt);

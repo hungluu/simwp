@@ -6,7 +6,7 @@ use Simwp\Component as Component;
  * Provide options managing features
  */
 abstract class OptionManager extends UserManager{
-	protected static $_options = [];
+	protected static $_options = array();
 
 	/**
 	 * Register an un-managed option
@@ -91,7 +91,7 @@ abstract class OptionManager extends UserManager{
 			return 'off';
 		}
 		else if($type === 'array'){
-			return [];
+			return array();
 		}
 
 		return false;

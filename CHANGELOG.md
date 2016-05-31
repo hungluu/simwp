@@ -1,3 +1,9 @@
+**0.0.4-alpha**
+- Use array() instead of [] to support PHP 5.3
+- Add a basic javascript api for extending components
+- Simwp\\Form\\Loop now does not require $options, will get the option_value if $options not provided
+- ...
+
 **0.0.3-alpha**
 - Add a changelog
 - Add TODO

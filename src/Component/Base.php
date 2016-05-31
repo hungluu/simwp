@@ -11,7 +11,7 @@ abstract class Base {
 	 * Array of items belongs to this component
 	 * @var array
 	 */
-	public $items = [];
+	public $items = array();
 
 	/**
 	 * Create a component requires its name
