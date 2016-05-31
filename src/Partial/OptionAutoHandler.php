@@ -7,7 +7,7 @@ abstract class OptionAutoHandler extends AutoRenderer {
 	 * Managed options, auto-processed on load
 	 * @var array
 	 */
-	protected static $_managed_options = [];
+	protected static $_managed_options = array();
 
 	/************************************
 	 * OPTIONS ADDITIONAL FUNCTIONALITY *
@@ -35,7 +35,7 @@ abstract class OptionAutoHandler extends AutoRenderer {
 	 * @param  optional Symfony\Component\Validator\Validation $validator validator
 	 * @return boolean
 	 */
-	public static function handled($key, $fn = null, &$errorCollector = [], &$validator = null){
+	public static function handled($key, $fn = null, &$errorCollector = array(), &$validator = null){
 		// NOTE : Crsf or extra security checks should be used outside
 
 		// check option existence and if updated
@@ -45,6 +45,7 @@ abstract class OptionAutoHandler extends AutoRenderer {
 		}
 
 		$option = static::$_options[$key];
+
 		// if option is handled to only some schemes
 		if(!static::isAccessible($key)){
 			return false;
@@ -76,7 +77,7 @@ abstract class OptionAutoHandler extends AutoRenderer {
 	 * @return array empty array on success
 	 */
 	public static function validateOption($data, $key, $validator){
-		$errors = [];
+		$errors = array();
 		$option = static::option($key);
 
 		if(!$option->isValidated()){
@@ -127,8 +128,8 @@ abstract class OptionAutoHandler extends AutoRenderer {
 		if(is_admin()){
 			$validator = Validation::createValidatorBuilder()->getValidator();
 			// temporarily save option values to used after no violation found
-			$options   = [];
-			$errors    = [];
+			$options   = array();
+			$errors    = array();
 			$isForm    = isset($_POST['submit']);
 			$current   = static::$_current;
 			$textdomain= static::current('found') && static::current('admin') ? static::current('admin')->transName : 'default';
