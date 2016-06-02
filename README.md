@@ -25,25 +25,14 @@ Register your first own `custom menu` that will contain all your setting pages
 ```php
 // create an admin holder to hold custom menus
 // and provide features like auto translating
-$admin_holder= Simwp::admin('custom admin');
+Simwp::admin('custom admin')
+	->menu('custom menu'); // Create your new menu item
+	->page('custom page'); // A menu contains on or many pages
+	->append(Section_Simple::class) // Register a Section to be display (1)
+	->set('render', 'custom_render_callback') // Or use a custom rendering function
+	->link('https://github.com/dumday/simwp'); // Or simply redirect to another url
 
-// your new menu item
-$custom_menu = $admin_holder->menu('custom menu');
-```
-
-Register a `custom page` setting page and pushed it into `custom menu`
-
-```php
-$custom_page = $custom_menu->page('custom page');
-```
-
-Register your section `Simple` to be displayed in `custom page`
-
-```php
-$custom_page->append(Section_Simple::class);
-```
-
-Then each sections will do their own jobs, rendering setting fields.
+(1) Sections are managed by Simwp for auto-rendering page contents into setting pages
 
 ![wordpress sections are auto-rendered by Simwp](https://i.imgur.com/2Ykq2G9.pngg)
 
@@ -83,7 +72,9 @@ Simwp::option('opt-key')
 	->append($custom_menu) // or shared with all the pages inside menu
 	->append('themes.php') // or shared with an admin-dashboard slug
 	->validate(new Assert\NotBlank()) // force option not to be blank
-	->validate(new Assert\Email()); // and force it to be an email
+	->validate(new Assert\Email()) // and force it to be an email
+	->updated($fn); // Or push a callback to determine when the option is submited, data sanitized before
+					// being passed in as an argument
 ```
 
 ![Wordpress options are validated by Symfony\Validator](https://i.imgur.com/Efd3fDw.png)
@@ -120,14 +111,14 @@ class SimpleSection extends Simwp\Section {
 
 ![Some section components](https://i.imgur.com/JAQRFbh.png)
 
-More and more components are being created, current list is default components :
+More and more components are being created, current list is default components ( with their own javascript events ) :
 
 - Checkboxes
 - Color Picker
 - Date Picker
-- Image
+- Image ( simwp_image_selected, simwp_image_removed )
 - Input
-- Lines
+- Lines ( simwp_line_added, simwp_line_removed )
 - Options
 - Radios
 - Tags

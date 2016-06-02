@@ -13,5 +13,7 @@ class Input extends Base {
 		}
 
 		echo sprintf($this->format, $this->id($key), $key, $this->type, $extra);
+
+		return Simwp::option($key);
 	}
 }

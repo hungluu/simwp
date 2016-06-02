@@ -25,6 +25,8 @@ abstract class Loop extends Base {
 		$this->before($key, $options);
 		$this->loop($key, $options);
 		$this->after($key, $options);
+
+		return Simwp::option($key);
 	}
 	public function before($key, $options){}
 	public function after($key, $options){}

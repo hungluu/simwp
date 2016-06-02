@@ -2,11 +2,11 @@
 namespace Simwp\Form;
 
 class Options extends Loop {
-	public function before($key){
+	public function before($key, $options){
 		echo sprintf('<select id="%s" name="%s">', $this->id($key), $key);
 	}
 
-	public function after($key){
+	public function after($key, $options){
 		echo '</select>';
 	}
 

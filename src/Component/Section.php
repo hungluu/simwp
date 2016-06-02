@@ -4,9 +4,11 @@ use Simwp;
 
 class Section {
 	public $class = '';
+
 	public function __construct($class){
 		$this->class = $class;
 	}
+
 	public function access(){
 		$args = func_get_args();
 		foreach($args as $arg){

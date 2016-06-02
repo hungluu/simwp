@@ -69,24 +69,43 @@ class AutoRenderer extends OptionManager {
 	}
 
 	/**
-	 * Create an alert ( a preset of notice )
-	 * @param  			string $name
-	 * @param  optional string $type
+	 * Get current page
+	 * @return Simwp\Component\Page
 	 */
-	public static function alert($name, $type = 'primary'){
-		return static::notice('---simwp-option-violated')->set('force', true)->set('type', $type);
+	public static function currentPage(){
+		return static::$_current->page;
 	}
 
 	/**
-	 * Get current rendering information
-	 * @param  optional string $key
+	 * Get current admin
+	 * @return Simwp\Component\Admin
 	 */
-	public static function current($key = false){
-		if($key){
-			return static::$_current->$key;
-		}
+	public static function currentAdmin(){
+		return static::$_current->admin;
+	}
 
-		return static::$_current;
+	/**
+	 * Get current section
+	 * @return string
+	 */
+	public static function currentSection(){
+		return static::$_current->section;
+	}
+
+	/**
+	 * Get current menu
+	 * @return Simwp\Component\Menu
+	 */
+	public static function currentMenu(){
+		return static::$_current->menu;
+	}
+
+	/**
+	 * Check if section found
+	 * @return boolean
+	 */
+	public static function currentFound(){
+		return static::$_current->found;
 	}
 
 	/***************
@@ -143,7 +162,11 @@ class AutoRenderer extends OptionManager {
 	 * @return string
 	 */
 	protected static function _sanitizeSectionName($section){
-		return str_replace('_', ' ', ucfirst(str_replace('Section_', '', $section)));
+		$name = str_replace('_', ' ', str_replace('Section_', '', $section));
+		$split= explode('\\', $name);
+		$name = array_pop($split);
+
+		return ucfirst($name);
 	}
 
 	/**
@@ -156,13 +179,19 @@ class AutoRenderer extends OptionManager {
 
 		foreach ($page->items as $section) {
 			$class = 'nav-tab simwp-nav-tab';
-			$name  = static::_sanitizeSectionName($section);
+			$name  = $section::$name;
+
+			if(!$name){
+				$name = static::_sanitizeSectionName($section);
+			}
+
+			$section_url = static::slug($section);
 
 			if($section === $current){
-				echo '<a class="nav-tab simwp-nav-tab nav-tab-active" href="?page=' . $page->slug . '&section=' . $section .'" style="margin-left: 0; margin-right: 0">' . $name . '</a>';
+				echo '<a class="nav-tab simwp-nav-tab nav-tab-active" href="?page=' . $page->slug . '&section=' . $section_url .'" style="margin-left: 0; margin-right: 0">' . $name . '</a>';
 			}
 			else {
-				echo '<a class="nav-tab simwp-nav-tab" href="?page=' . $page->slug . '&section=' . $section .'" style="margin-left: 0; margin-right: 0">' . $name . '</a>';
+				echo '<a class="nav-tab simwp-nav-tab" href="?page=' . $page->slug . '&section=' . $section_url .'" style="margin-left: 0; margin-right: 0">' . $name . '</a>';
 			}
 		}
 
@@ -188,7 +217,7 @@ class AutoRenderer extends OptionManager {
 	 * @param  object $current
 	 * @return bool
 	 */
-	protected static function _renderPage($current){
+	protected static function _renderSection($current){
 		if($current->found){
 			$admin   = $current->admin;
 			$menu    = $current->menu;
@@ -202,11 +231,16 @@ class AutoRenderer extends OptionManager {
 				$fields = get_class_methods($section);
 				// remove the __call magic method
 				array_pop($fields);
+				// remove the __button call
+				array_pop($fields);
 
-				foreach($fields as $field){
-					$des   = $admin->trans(static::_describeField($field));
-					add_settings_field($field, $des, array($obj, $field), $page->slug, $section);
-					register_setting($section, $field);
+				// Custom rendering with tabs
+				if(!in_array('__render', $fields)){
+					foreach($fields as $field){
+						$des   = $admin->trans(static::_describeField($field));
+						add_settings_field($field, $des, array($obj, $field), $page->slug, $section);
+						register_setting($section, $field);
+					}
 				}
 			}
 		}
@@ -219,16 +253,24 @@ class AutoRenderer extends OptionManager {
 	 * @param  object $current
 	 * @return boolean
 	 */
-	protected static function _renderSection($current){
+	protected static function _renderPage($current){
 		if($current->found){
 			$admin   = $current->admin;
 			$menu    = $current->menu;
 			$page    = $current->page;
 			$section = $current->section;
-			$material= $admin->material;
 
+			$fields = get_class_methods($section);
+
+			// custom render on section level
+			if (in_array('__render', $fields)) {
+				echo static::_renderNavTabs($page, $section);
+
+				$obj = new $section;
+				$obj->__render();
+			}
 			// auto render into sections
-			if ($page->render === '') {
+			else if ($page->render === '') {
 				echo static::_renderNavTabs($page, $section);
 
 				echo $page->before;
@@ -236,7 +278,9 @@ class AutoRenderer extends OptionManager {
 				settings_fields($section);
 				do_action('admin_simwp_section');
 				do_settings_sections($page->slug);
-				submit_button();
+
+				$obj = new $section;
+				$obj->__button();
 
 				echo $page->after;
 			}
@@ -247,7 +291,7 @@ class AutoRenderer extends OptionManager {
 				echo '<script>window.location.replace("' . $url . '")</script>';
 				die();
 			}
-			// use render function
+			// custom render page level
 			else {
 				call_user_func($page->render);
 			}
@@ -271,6 +315,7 @@ class AutoRenderer extends OptionManager {
 		$current->slug    = isset($_GET['page']) ? $_GET['page'] : '';
 		// &section=*
 		$current->section = isset($_GET['section']) ? $_GET['section']  : '';
+		$current->section = str_replace('-', '\\', $current->section);
 		$current->admin   = null;
 		$current->page    = null;
 		$current->menu    = null;

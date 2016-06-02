@@ -6,6 +6,7 @@ namespace Simwp;
  * Should only be used automatically by Simwp
  */
 abstract class Section {
+	static $name = '';
 	/**
 	 * Get a filter
 	 * @param  string $name name of filter
@@ -25,6 +26,14 @@ abstract class Section {
 	protected function view ($name) {
 		$class = 'Simwp\\Form\\' . ucfirst($name);
 		return new $class();
+	}
+
+	/**
+	 * Display submit button
+	 * @return [type] [description]
+	 */
+	public function __button() {
+		submit_button();
 	}
 
 	/**

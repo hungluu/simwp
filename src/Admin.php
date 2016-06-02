@@ -67,7 +67,7 @@ class Admin extends Component\Base {
 				);
 
 				foreach ($pages as $i_page => $page) {
-					$render = 'Simwp::renderSection';
+					$render = 'Simwp::renderPage';
 
 					if($page->level === ''){
 						$page->level = $menu->level;

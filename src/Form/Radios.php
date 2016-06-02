@@ -2,8 +2,8 @@
 namespace Simwp\Form;
 
 class Radios extends Loop {
-	public function before(){}
-	public function after(){}
+	public function before($key, $options){}
+	public function after($keu, $options){}
 
 	public function each($idx, $name, $active, $key){
 		if($active){

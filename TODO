@@ -1,3 +1,4 @@
 - Document all source code
 - Refine user capability managing code
 - Create Google Map component
+- Find the best way to implement Simwp's own plugin systems because of wordpress's lack of supporting on syncing package's versions between themes and plugins

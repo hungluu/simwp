@@ -2,10 +2,10 @@
 namespace Simwp\Form;
 
 class Lines extends Loop {
-	public function before($key){
+	public function before($key, $options){
 		echo '<table id="simwp-input-' . $key . '" class="simwp-input-lines"><tbody>';
 	}
-	public function after($key){
+	public function after($key, $options){
 		echo '<tr>
 				<td>
 					<input type="text" class="simwp-input-lines-edit" id="simwp-input-lines-edit-' . $key . '">

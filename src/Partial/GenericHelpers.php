@@ -32,7 +32,7 @@ abstract class GenericHelpers {
 	 * @return string
 	 */
 	public static function slug($name){
-		return strtolower(trim(preg_replace('/[^\w]/', '-', $name), '-'));
+		return trim(preg_replace('/[^a-zA-Z0-9]/', '-', $name), '-');
 	}
 
 	/**
@@ -89,6 +89,7 @@ abstract class GenericHelpers {
 	 public static function is($sth){
 		 $args = func_get_args();
 		 $method = 'is' . ucfirst($args[0]);
+
 		 if(count($args) === 1){
 			 return static::$method();
 		 }
@@ -97,6 +98,24 @@ abstract class GenericHelpers {
 			 return call_user_func_array('static::' . $method, $args);
 		 }
 	 }
+
+	/**
+	 * Auto-binding for current- prefixed methods
+	 * @param string $key
+	 * @return mixed
+	 */
+	public static function current($key){
+		$args = func_get_args();
+		$method = 'current' . ucfirst($args[0]);
+
+		if(count($args) === 1){
+			return static::$method();
+		}
+		else{
+			$args = array_slice($args, 1);
+			return call_user_func_array('static::' . $method, $args);
+		}
+	}
 
 	 /**
 	  * Create a wp_nonce or validate nonce if $value is provided
