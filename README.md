@@ -32,6 +32,8 @@ Simwp::admin('custom admin')
 	->set('render', 'custom_render_callback') // Or use a custom rendering function
 	->link('https://github.com/dumday/simwp'); // Or simply redirect to another url
 
+```
+
 (1) Sections are managed by Simwp for auto-rendering page contents into setting pages
 
 ![wordpress sections are auto-rendered by Simwp](https://i.imgur.com/2Ykq2G9.pngg)
