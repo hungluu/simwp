@@ -32,7 +32,7 @@ abstract class GenericHelpers {
 	 * @return string
 	 */
 	public static function slug($name){
-		return trim(preg_replace('/[^a-zA-Z0-9]/', '-', $name), '-');
+		return trim(preg_replace('/[^a-zA-Z0-9\-\_]/', '-', $name), '-');
 	}
 
 	/**

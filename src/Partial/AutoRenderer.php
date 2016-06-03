@@ -260,17 +260,21 @@ class AutoRenderer extends OptionManager {
 			$page    = $current->page;
 			$section = $current->section;
 
-			$fields = get_class_methods($section);
+			$sectionExists = false;
+
+			if(class_exists($section)){
+				$obj = new $section;
+				$sectionExists = true;
+				$fields = get_class_methods($obj);
+			}
 
 			// custom render on section level
-			if (in_array('__render', $fields)) {
+			if ($sectionExists && in_array('__render', $fields)) {
 				echo static::_renderNavTabs($page, $section);
-
-				$obj = new $section;
 				$obj->__render();
 			}
 			// auto render into sections
-			else if ($page->render === '') {
+			else if ($sectionExists && $page->render === '') {
 				echo static::_renderNavTabs($page, $section);
 
 				echo $page->before;
@@ -278,8 +282,6 @@ class AutoRenderer extends OptionManager {
 				settings_fields($section);
 				do_action('admin_simwp_section');
 				do_settings_sections($page->slug);
-
-				$obj = new $section;
 				$obj->__button();
 
 				echo $page->after;
@@ -292,7 +294,7 @@ class AutoRenderer extends OptionManager {
 				die();
 			}
 			// custom render page level
-			else {
+			else if($page->render) {
 				call_user_func($page->render);
 			}
 		}
