@@ -92,7 +92,7 @@ class Admin extends Component\Base {
 					// update tracker if current page is requested and will be rendered
 					if($page->slug === $current->slug){
 						if(!$current->section){
-							$current->section = $page->items[0];
+							$current->section = count($page->items) > 0 ? $page->items[0] : '';
 						}
 
 						$current->found   = true;
