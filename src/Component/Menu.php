@@ -22,7 +22,7 @@ class Menu extends Base{
 			$page->slug = Simwp::slug($name);
 		}
 
-		static::append($page);
+		static::append(array($page));
 
 		return $page;
 	}

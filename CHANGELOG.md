@@ -1,3 +1,10 @@
+**0.0.6-alpha**
+- Add Form\\Editor component to make TinyMCE field
+- Add more javascript events
+- Component\\Section now contains Component\\Option, so do all other components
+- Add Component\\Level
+- Some fixes
+
 **0.0.5-alpha**
 - Refine Form Loop-type components
 - Move handling code for removable notices into admin_init hook

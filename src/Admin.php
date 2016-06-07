@@ -44,27 +44,12 @@ class Admin extends Component\Base {
 		foreach ($this->items as $i_menu => $menu) {
 			$pages = $menu->items;
 			$page_count = count($pages);
+			$rendered_pages = [];
+			$rendered_menu  = [];
+			$menu_slug = null;
 
-			if($page_count > 0){
-				// use first page as front page
-				$menu->slug = $menu->items[0]->slug;
-				$name = ucfirst($this->trans($menu->name));
-				$level= $menu->level;
-				$icon = Simwp::icon($menu->icon);
-
-				// ===
-				$menu->slug = $this->name . '-' . $menu->slug;
-
-				// Add main menu
-				add_menu_page(
-					$name,
-					$name,
-					$level,
-					$menu->slug,
-					null,
-					$icon,
-					$menu->order
-				);
+			if(count($pages) > 0){
+				// Rewrite menu registering part to work with multi-access-level pages
 
 				foreach ($pages as $i_page => $page) {
 					$render = 'Simwp::renderPage';
@@ -73,18 +58,24 @@ class Admin extends Component\Base {
 						$page->level = $menu->level;
 					}
 
-					$name  = ucfirst($this->trans($page->name));
-					$level = $page->level;
+					if(Simwp::cant($page->level)){
+						continue;
+					}
 
 					// ==
 					$page->slug = $this->name . '-' . $page->slug;
 
+					if($menu_slug === null){
+						$menu_slug = $page->slug;
+					}
+
+					$name  = ucfirst($this->trans($page->name));
 					// Add submenu ( page )
-					add_submenu_page(
-						$menu->slug,
+					$rendered_pages[] = array(
+						$menu_slug,
 						$name,
 						$name,
-						$level,
+						$page->level,
 						$page->slug,
 						$render
 					);
@@ -100,6 +91,27 @@ class Admin extends Component\Base {
 						$current->page    = $page;
 						$current->admin   = $this;
 					}
+				}
+
+				// use first page as front page
+				$menu_name = ucfirst($this->trans($menu->name));
+				$icon = Simwp::icon($menu->icon);
+
+				// main menu
+				$rendered_menu = array(
+					$menu_name,
+					$menu_name,
+					$menu->level,
+					$menu_slug,
+					null,
+					$icon,
+					$menu->order
+				);
+
+				call_user_func_array('add_menu_page', $rendered_menu);
+
+				foreach ($rendered_pages as $submenu) {
+					call_user_func_array('add_submenu_page', $submenu);
 				}
 			}
 		}

@@ -70,9 +70,9 @@ Simwp::is('user'); // check if user logged in
 
 // Some simple option handling
 Simwp::option('opt-key')
-	->append(Simple_Section) // the option updating only available in a specified section
-	->append($custom_menu) // or shared with all the pages inside menu
-	->append('themes.php') // or shared with an admin-dashboard slug
+	->appendTo(Simple_Section::class) // the option updating only available in a specified section
+	->appendTo($custom_menu) // or shared with all the pages inside menu
+	->appendTo('themes.php') // or shared with an admin-dashboard slug
 	->validate(new Assert\NotBlank()) // force option not to be blank
 	->validate(new Assert\Email()) // and force it to be an email
 	->updated($fn); // Or push a callback to determine when the option is submited, data sanitized before
@@ -115,6 +115,7 @@ class SimpleSection extends Simwp\Section {
 
 More and more components are being created, current list is default components ( with their own javascript events ) :
 
+- tinyMCE
 - Checkboxes
 - Color Picker
 - Date Picker

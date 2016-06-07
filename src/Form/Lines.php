@@ -25,6 +25,6 @@ class Lines extends Loop {
 			<td>
 				<button type="button" class="delete">x</button>
 			</td>
-		</tr>', $key, $key, $name);
+		</tr>', $key, $name, $name);
 	}
 }

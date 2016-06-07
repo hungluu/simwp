@@ -11,6 +11,7 @@ class Options extends Loop {
 	}
 
 	public function each($idx, $name, $active, $key){
+
 		if($active){
 			$extra = ' selected="selected"';
 		}

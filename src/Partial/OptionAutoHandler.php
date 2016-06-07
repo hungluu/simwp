@@ -153,24 +153,27 @@ abstract class OptionAutoHandler extends AutoRenderer {
 						static::set($key, $data);
 					}
 
-					$notice = static::notice('---simwp-option-violated')->alert()->append(static::trans('Settings saved.', $textdomain));
+					$notice = static::notice('---simwp-option-violated')->alert()->append(array(static::trans('Settings saved.', $textdomain)));
 				}
 				else {
 					$notice = static::notice('---simwp-option-violated')->alert();
 
-					$notice->append(static::trans('Settings not saved. Please fix the following errors', $textdomain));
+					$messages = array();
+					$messages[] = static::trans('Settings not saved. Please fix the following errors', $textdomain);
 
 					// show error messages
 					foreach($errors as $key => $errorList){
 						if(count($errorList) > 0){
-							$notice->append('<b>' . $key . ' :</b>');
+							$messages[] = '<b>' . $key . ' :</b>';
 							foreach($errorList as $error){
 								foreach($error as $e){
-									$notice->append(static::trans(' - ' . $e->getMessage(), $textdomain));
+									$messages[] = static::trans(' - ' . $e->getMessage(), $textdomain);
 								}
 							}
 						}
 					}
+
+					$notice->append($messages);
 				}
 			}
 		}

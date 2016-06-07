@@ -29,13 +29,16 @@ var Simwp = (function($){
 	simwp.view.noticeRemove = function(s){
 		$(s).on('click', function removeNotice(){
 			simwp.set('---simwp-removed-notices', this.id.replace('simwp-notice-', ''));
-			siwmp.trigger('simwp_notice_removed', [this]);
+			siwmp.trigger('simwp_notice_removed', [$(this)]);
 		});
 	};
 
 	simwp.view.lineRemoveButton = function(s){
 		$(s).on('click', function removeLine(){
-			$(this).closest('tr').remove();
+			var row    = $(this).closest('tr'),
+				holder = row.parent();
+			simwp.trigger('simwp_line_removed', [row, holder]);
+			row.remove();
 		});
 	};
 
@@ -63,7 +66,7 @@ var Simwp = (function($){
 
 		currentRow.closest('table');
 
-		simwp.trigger('simwp_line_added', [row, this]);
+		simwp.trigger('simwp_line_added', [row, $(this)]);
 	}
 
 	simwp.view.lineAddInput = function(s){
@@ -110,10 +113,11 @@ var Simwp = (function($){
 
 	simwp.view.imageRemove = function(s){
 		$(s).click(function removeImage(){
-			var img = $(this).parent().children('img');
+			var parent = $(this).parent(),
+				img = parent.children('img');
 			img.attr('src', '');
 			img.attr('src', '//placehold.it/' + img.width() + 'x' + img.height() + '/ddd/fdfdfd');
-			$(this).parent().children('input').val('');
+			parent.children('input').val('');
 			// target
 			simwp.trigger('simwp_image_removed', [parent]);
 		});

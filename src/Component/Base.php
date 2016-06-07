@@ -1,6 +1,9 @@
 <?php
 namespace Simwp\Component;
 
+/**
+ * This is base class for all Simwp components
+ */
 abstract class Base {
 	/**
 	 * Component's name
@@ -23,21 +26,35 @@ abstract class Base {
 
 	/**
 	 * Append to another component
-	 * @param  Simwp\Component\Base $parent the component that this component will belongs to
-	 * @return Simwp\Component\Base 		this component
+	 * @param  mixed $parent the components that this component will belongs to
+	 * @return Simwp\Component\Base this component
 	 */
-	public function appendTo (Base $parent) {
-		$parent->append($this);
+	public function appendTo ($parents) {
+		if(!is_array($parents)){
+			$parents = func_get_args();
+		}
+
+		foreach ($parents as $parent) {
+			$parent->append($this);
+		}
+
 		return $this;
 	}
 
 	/**
 	 * Append another component
-	 * @param  mixed $child thing that this component will append
-	 * @return Simwp\Component\Base 	   this component
+	 * @param  mixed $childs thing that this component will append
+	 * @return Simwp\Component\Base this component
 	 */
-	public function append ($child) {
-		$this->items[] = $child;
+	public function append ($childs) {
+		if(!is_array($childs)){
+			$childs = func_get_args();
+		}
+
+		foreach ($childs as $child) {
+			$this->items[] = $child;
+		}
+
 		return $this;
 	}
 

@@ -12,6 +12,9 @@ class Option extends Base {
 		$this->validators[] = $constraint;
 		return $this;
 	}
+	public function appendTo($section){
+		return $this->append($section);
+	}
 	public function isValidated(){
 		return count($this->validators) > 0;
 	}

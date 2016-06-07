@@ -4,7 +4,7 @@ use Simwp;
 
 abstract class Loop extends Base {
 	public function active($idx, $opt){
-		return $idx === $opt;
+		return $idx == $opt;
 	}
 	public function loop($key, $options){
 		$opt = Simwp::get($key);

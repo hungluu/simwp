@@ -2,21 +2,14 @@
 namespace Simwp\Component;
 use Simwp;
 
-class Section {
-	public $class = '';
-
-	public function __construct($class){
-		$this->class = $class;
-	}
-
-	public function access(){
-		$args = func_get_args();
-		foreach($args as $arg){
-			if(is_string($arg)){
-				Simwp::option($arg)->append($this->class);
+class Section extends Base{
+	public function append($options){
+		foreach($options as $option){
+			if($option instanceof Option){
+				$option->appendTo($this->name);
 			}
 			else{
-				$arg->append($this->class);
+				Simwp::option($option)->appendTo($this->name);
 			}
 		}
 	}

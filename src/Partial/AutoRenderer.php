@@ -309,7 +309,7 @@ class AutoRenderer extends OptionManager {
 	 * @return object
 	 */
 	protected static function _registerPages($admins){
-		$current = new \stdClass();
+		$current = new \stdClass;
 		$current->found   = false;
 		// admin.php?page=1
 		$current->query   = preg_replace('/^.+\/wp-admin\//', '', $_SERVER['REQUEST_URI']);

@@ -18,3 +18,5 @@ final class Simwp extends Simwp\Partial\Views{
 if(!defined('SIMWP_HOOKS_LOADED')){
 	require __DIR__ . '/install_hooks.php';
 }
+
+define('SIMWP_LOADED', true);
