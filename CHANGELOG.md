@@ -3,6 +3,7 @@
 - Add more javascript events
 - Component\\Section now contains Component\\Option, so do all other components
 - Add Component\\Level
+- Add Form\\DateTimePicker
 - Some fixes
 
 **0.0.5-alpha**

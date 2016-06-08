@@ -115,10 +115,11 @@ class SimpleSection extends Simwp\Section {
 
 More and more components are being created, current list is default components ( with their own javascript events ) :
 
-- tinyMCE
+- Editor ( TinyMCE )
 - Checkboxes
 - Color Picker
 - Date Picker
+- DateTime Picker
 - Image ( simwp_image_selected, simwp_image_removed )
 - Input
 - Lines ( simwp_line_added, simwp_line_removed )

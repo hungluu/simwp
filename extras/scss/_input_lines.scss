@@ -14,6 +14,7 @@
 		cursor: pointer;
 		cursor: hand;
 		color : #DFDFDF;
+		padding: 3px 8px;
 	}
 
 	button:hover {
@@ -26,11 +27,5 @@
 
 	button.delete:hover {
 		background: red;
-	}
-
-	tr:hover {
-		label {
-			font-weight: bold;
-		}
 	}
 }

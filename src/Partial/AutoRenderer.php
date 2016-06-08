@@ -202,14 +202,14 @@ class AutoRenderer extends OptionManager {
 	 * Register stylesheets
 	 */
 	protected static function _registerStyles($current){
-		if($current->found){
-			define('SIMWP_STYLESHEET', static::url( static::PATH . '/extras/simwp.min.css'));
-			// Enqueue required script
-			static::bind('admin_enqueue_scripts', function(){
-				wp_enqueue_style('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
-				wp_enqueue_style('simwp/css' , SIMWP_STYLESHEET);
-			});
-		}
+		// Enqueue required script
+		static::bind('admin_enqueue_scripts', function(){
+			if(static::current('found')){
+				wp_enqueue_style('simwp/css' , static::url( static::PATH . '/extras/simwp.min.css'));
+			}
+
+			wp_enqueue_style('simwp-notices/css', static::url( static::PATH . '/extras/simwp-notices.min.css'));
+		});
 	}
 
 	/**

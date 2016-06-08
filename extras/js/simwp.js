@@ -11,8 +11,8 @@ var Simwp = (function($){
 			},
 			method : 'POST',
 			headers: {
-	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        }
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
 		});
 	};
 
@@ -35,7 +35,7 @@ var Simwp = (function($){
 
 	simwp.view.lineRemoveButton = function(s){
 		$(s).on('click', function removeLine(){
-			var row    = $(this).closest('tr'),
+			var row		= $(this).closest('tr'),
 				holder = row.parent();
 			simwp.trigger('simwp_line_removed', [row, holder]);
 			row.remove();
@@ -86,7 +86,14 @@ var Simwp = (function($){
 		});
 	};
 
-	simwp.view.imagePicker = function(s){
+	simwp.view.lines = function(s){
+		var lines = $(s);
+		simwp.view.lineRemoveButton(lines.find('button.delete'));
+		simwp.view.lineAddInput(lines.find('.simwp-input-lines-edit'));
+		simwp.view.lineAddButton(lines.find('.simwp-input-lines-button'));
+	};
+
+	simwp.view.imageSelect = function(s){
 		$(s).click(function pickImage(e){
 			var _this = this;
 			e.preventDefault();
@@ -123,17 +130,17 @@ var Simwp = (function($){
 		});
 	};
 
-	simwp.view.tags = function(s){
-		if($.fn.tagit){
-			$(s).tagit();
+	simwp.view.imagePicker = function(s){
+		var images = $(s);
 
-			if($('.simwp-material-ui').length > 0){
-				$('.tagit').children().children('input').on('focusin', function(){
-					$(this).parent().parent().addClass('tagit-focus');
-				}).on('focusout', function(){
-					$(this).parent().parent().removeClass('tagit-focus');
-				});
-			}
+		simwp.view.imageSelect(images.children('button.add'));
+		simwp.view.imageRemove(images.children('button.delete'));
+	};
+
+	simwp.view.tags = function(s, options){
+		options = options || {};
+		if($.fn.tagEditor){
+			$(s).tagEditor(options);
 		}
 	};
 
@@ -143,10 +150,55 @@ var Simwp = (function($){
 		}
 	};
 
-	simwp.view.datePicker = function(s){
-		if($.datepicker){
-			$(s).datepicker({dateFormat : 'yy-mm-dd'}, $.datepicker.regional[simwp.locale]);
+	function timePad(t){
+		if(t < 10){
+			return '0' + t;
 		}
+
+		return '' + t;
+	}
+
+	function defaultDate(){
+		var time = new Date(),
+			idate = [
+				time.getFullYear(),
+				timePad(time.getMonth() + 1),
+				timePad(time.getDate()),
+			];
+
+		return idate.join('-');
+	}
+
+	function dateTimePicker(s, options){
+		if($.datetimepicker){
+			$.datetimepicker.setLocale(simwp.locale);
+			$(s).each(function(){
+				if($(this).val() == ''){
+					options.startDate = defaultDate();
+				}
+
+				$(this).datetimepicker(options);
+			});
+		}
+	}
+
+	simwp.view.dateTimePicker = function(s){
+		dateTimePicker(s, {
+			format:'Y-m-d H:i:s',
+			mask : true,
+			lazyInit:true,
+			step  : 30
+		});
+	};
+
+	simwp.view.datePicker = function(s){
+		dateTimePicker(s, {
+			format:'Y-m-d',
+			mask : true,
+			lazyInit:true,
+			timepicker : false,
+			step  : 30
+		});
 	};
 
 	// Install components
@@ -165,16 +217,11 @@ var Simwp = (function($){
 
 		simwp.view.datePicker('.simwp-date-field');
 
-		$('#ui-datepicker-div').addClass('ll-skin-melon');
+		simwp.view.dateTimePicker('.simwp-datetime-field');
 
-		var images = $('.simwp-input-image');
+		simwp.view.imagePicker('.simwp-input-image');
 
-		simwp.view.imagePicker(images.children('button.add'));
-		simwp.view.imageRemove(images.children('button.delete'));
-
-		simwp.view.lineRemoveButton($('.simwp-input-lines').find('button.delete'));
-		simwp.view.lineAddInput('.simwp-input-lines-edit');
-		simwp.view.lineAddButton('.simwp-input-lines-button');
+		simwp.view.lines('.simwp-input-lines');
 	});
 
 	return simwp;
