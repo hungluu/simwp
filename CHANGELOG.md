@@ -4,6 +4,8 @@
 - Component\\Section now contains Component\\Option, so do all other components
 - Add Component\\Level
 - Add Form\\DateTimePicker
+- Material style is not included anymore, default style used
+- User jquery.tag-editor and jquery.datetimepicker plugins instead of jquery-ui datepicker
 - Some fixes
 
 **0.0.5-alpha**

@@ -153,15 +153,6 @@ Find resolved issues or create a new one if you can't find any issue related to 
 
 ## FAQ
 
-**How can I use default Wordpress or my own styles instead of this one's seasoned material design fields?**
-
-Wow I feel sad to hear that. But you can always disable this feature or even add your own styles to components by settings your `admin holder` 's className like
-
-```php
-// $admin_holder = Simwp::admin('admin holder')
-$admin_holder->className('my-own-class'); // default is 'simwp-material-ui'
-```
-
 **How can I create my own section components and filters?**
 
 You can declare you own components and filters at any time, the components should be inside namespace `Simwp\Form` and the filters should be inside namespace `Simwp\Form\Filter` so the default `view` and `filter` method can easily recognize them.

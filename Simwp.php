@@ -3,7 +3,7 @@
  * Gate-way of Simwp . This a an very early-access of Simwp library
  *
  * @package Simwp
- * @version 0.0.5-alpha
+ * @version 0.0.6-alpha
  * @author  Dumday ( Hung Luu )
  * @license MIT
  * @copyright HR (c) 2016
