@@ -44,8 +44,8 @@ class Admin extends Component\Base {
 		foreach ($this->items as $i_menu => $menu) {
 			$pages = $menu->items;
 			$page_count = count($pages);
-			$rendered_pages = [];
-			$rendered_menu  = [];
+			$rendered_pages = array();
+			$rendered_menu  = array();
 			$menu_slug = null;
 
 			if(count($pages) > 0){

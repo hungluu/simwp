@@ -2,6 +2,7 @@
 namespace Simwp\Partial;
 use Simwp\Component as Component;
 use Simwp\Admin;
+use Simwp;
 
 /**
  * Provide section, menu and page rendering features
@@ -204,11 +205,11 @@ class AutoRenderer extends OptionManager {
 	protected static function _registerStyles($current){
 		// Enqueue required script
 		static::bind('admin_enqueue_scripts', function(){
-			if(static::current('found')){
-				wp_enqueue_style('simwp/css' , static::url( static::PATH . '/extras/simwp.min.css'));
+			if(Simwp::current('found')){
+				wp_enqueue_style('simwp/css' , Simwp::url( Simwp::PATH . '/extras/simwp.min.css'));
 			}
 
-			wp_enqueue_style('simwp-notices/css', static::url( static::PATH . '/extras/simwp-notices.min.css'));
+			wp_enqueue_style('simwp-notices/css', Simwp::url( Simwp::PATH . '/extras/simwp-notices.min.css'));
 		});
 	}
 
