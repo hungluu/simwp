@@ -10,7 +10,7 @@ class Admin extends Component\Base {
 	// text domain
 	public $transName = 'default';
 	// extra classNames
-	public $className = 'simwp-material-ui';
+	public $className = '';
 
 	/**
 	 * Automatically get translated strings if flag 'translate' is true
