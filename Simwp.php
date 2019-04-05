@@ -4,7 +4,7 @@
  *
  * @package Simwp
  * @version 0.0.6-alpha
- * @author  Dumday ( Hung Luu )
+ * @author  hungluu ( Hung Luu )
  * @license MIT
  * @copyright HR (c) 2016
  */

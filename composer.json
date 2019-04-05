@@ -1,10 +1,10 @@
 {
-    "name": "dumday/simwp",
+    "name": "hungluu/simwp",
     "type": "library",
-	"descripttion": "Help interacting with Wordpress admin dashboard more easily",
+	"description": "Help interacting with Wordpress admin dashboard more easily",
 	"version": "0.0.1-alpha",
 	"keywords": ["simple", "wordpress", "dashboard", "admin", "notice", "setting", "option", "menu"],
-	"homepage": "https://github.com/dumday/simwp",
+	"homepage": "https://github.com/hungluu/simwp",
     "require": {
         "symfony/validator": "^3.0"
     },

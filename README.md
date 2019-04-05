@@ -2,7 +2,7 @@
 
 This lightweight module is designed to be put inside any of your Wordpress themes or plugins to help interacting with Wordpress admin dashboard more easily.
 
-**NOTE:** For non-composer user, you can download a compiled version at [simwp-compiled](https://github.com/dumday/simwp-compiled)
+**NOTE:** For non-composer user, you can download a compiled version at [simwp-compiled](https://github.com/hungluu/simwp-compiled)
 
 ```
 composer require simwp=dev-master
@@ -30,7 +30,7 @@ Simwp::admin('custom admin')
 	->page('custom page'); // A menu contains on or many pages
 	->append(Section_Simple::class) // Register a Section to be display (1)
 	->set('render', 'custom_render_callback') // Or use a custom rendering function
-	->link('https://github.com/dumday/simwp'); // Or simply redirect to another url
+	->link('https://github.com/hungluu/simwp'); // Or simply redirect to another url
 
 ```
 
@@ -149,7 +149,7 @@ And 5 flags of notice : `primary` `info` `success` `warning` `error`
 
 ## Need helps
 
-Find resolved issues or create a new one if you can't find any issue related to your problem at [Issues](https://github.com/dumday/simwp/issues)
+Find resolved issues or create a new one if you can't find any issue related to your problem at [Issues](https://github.com/hungluu/simwp/issues)
 
 ## FAQ
 
